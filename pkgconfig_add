@@ -1,0 +1,9 @@
+# This file contains additional pkgconfig build requirements that did
+# not get picked up automatically. One name per line, no whitespace.
+Qt5Multimedia
+Qt5Qml
+Qt5Sensors
+Qt5Svg
+Qt5UiTools
+Qt5XmlPatterns
+
