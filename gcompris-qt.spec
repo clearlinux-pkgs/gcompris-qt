@@ -6,11 +6,9 @@
 #
 Name     : gcompris-qt
 Version  : 0.91
-Release  : 2
+Release  : 3
 URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.91.tar.xz
 Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.91.tar.xz
-Source1  : https://gcompris.net/download/converted_ogg_to_mp3-0.91.7z
-Source2  : https://gcompris.net/download/translations-0.91.7z
 Source99 : https://gcompris.net/download/qt/src/gcompris-qt-0.91.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
@@ -76,29 +74,21 @@ license components for the gcompris-qt package.
 
 %prep
 %setup -q -n gcompris-qt-0.91
-cd ..
-%setup -q -T -D -n gcompris-qt-0.91 -b 2
-cd ..
-%setup -q -T -D -n gcompris-qt-0.91 -b 1
-mkdir -p clr-build/share/gcompris-qt/translations/
-mv %{_topdir}/BUILD/translations/* %{_topdir}/BUILD/gcompris-qt-0.91/clr-build/share/gcompris-qt/translations/
-mkdir -p clr-build/src/
-mv %{_topdir}/BUILD/src/* %{_topdir}/BUILD/gcompris-qt-0.91/clr-build/src/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535413483
-mkdir -p clr-build
+export SOURCE_DATE_EPOCH=1535489962
+mkdir clr-build
 pushd clr-build
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1535413483
+export SOURCE_DATE_EPOCH=1535489962
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/gcompris-qt
 cp COPYING %{buildroot}/usr/share/doc/gcompris-qt/COPYING
