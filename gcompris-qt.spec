@@ -5,17 +5,17 @@
 # Source0 file verified with key 0x63D7264C05687D7E (animtim@gmail.com)
 #
 Name     : gcompris-qt
-Version  : 0.91
-Release  : 3
-URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.91.tar.xz
-Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.91.tar.xz
-Source99 : https://gcompris.net/download/qt/src/gcompris-qt-0.91.tar.xz.sig
+Version  : 0.95
+Release  : 4
+URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz
+Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz
+Source99 : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0 LAL-1.2 MPL-2.0
-Requires: gcompris-qt-bin
-Requires: gcompris-qt-data
-Requires: gcompris-qt-license
+Requires: gcompris-qt-bin = %{version}-%{release}
+Requires: gcompris-qt-data = %{version}-%{release}
+Requires: gcompris-qt-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-qmake
 BuildRequires : git
@@ -28,12 +28,13 @@ BuildRequires : pkgconfig(Qt5Svg)
 BuildRequires : pkgconfig(Qt5UiTools)
 BuildRequires : pkgconfig(Qt5XmlPatterns)
 BuildRequires : qml-box2d
+BuildRequires : qtbase-dev mesa-dev
 BuildRequires : qttools-extras
 
 %description
 GCompris / I Got IT
 GCompris is a GNU package
-http://gcompris.net
+https://gcompris.net
 GCompris is a high quality educational software suite, including a large
 number of activities for children aged 2 to 10. Some of the activities
 are game orientated, but nonetheless still educational.
@@ -41,8 +42,8 @@ are game orientated, but nonetheless still educational.
 %package bin
 Summary: bin components for the gcompris-qt package.
 Group: Binaries
-Requires: gcompris-qt-data
-Requires: gcompris-qt-license
+Requires: gcompris-qt-data = %{version}-%{release}
+Requires: gcompris-qt-license = %{version}-%{release}
 
 %description bin
 bin components for the gcompris-qt package.
@@ -73,27 +74,27 @@ license components for the gcompris-qt package.
 
 
 %prep
-%setup -q -n gcompris-qt-0.91
+%setup -q -n gcompris-qt-0.95
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535489962
-mkdir clr-build
+export SOURCE_DATE_EPOCH=1545509066
+mkdir -p clr-build
 pushd clr-build
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1535489962
+export SOURCE_DATE_EPOCH=1545509066
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/gcompris-qt
-cp COPYING %{buildroot}/usr/share/doc/gcompris-qt/COPYING
-cp src/activities/checkers/LICENSE %{buildroot}/usr/share/doc/gcompris-qt/src_activities_checkers_LICENSE
-cp src/core/COPYING %{buildroot}/usr/share/doc/gcompris-qt/src_core_COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/gcompris-qt
+cp COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/COPYING
+cp src/activities/checkers/LICENSE %{buildroot}/usr/share/package-licenses/gcompris-qt/src_activities_checkers_LICENSE
+cp src/core/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/src_core_COPYING
 pushd clr-build
 %make_install
 popd
@@ -125,6 +126,7 @@ popd
 /usr/share/gcompris-qt/rcc/ballcatch.rcc
 /usr/share/gcompris-qt/rcc/bargame.rcc
 /usr/share/gcompris-qt/rcc/bargame_2players.rcc
+/usr/share/gcompris-qt/rcc/binary_bulb.rcc
 /usr/share/gcompris-qt/rcc/braille_alphabets.rcc
 /usr/share/gcompris-qt/rcc/braille_fun.rcc
 /usr/share/gcompris-qt/rcc/calendar.rcc
@@ -226,12 +228,17 @@ popd
 /usr/share/gcompris-qt/rcc/mosaic.rcc
 /usr/share/gcompris-qt/rcc/nine_men_morris.rcc
 /usr/share/gcompris-qt/rcc/nine_men_morris_2players.rcc
+/usr/share/gcompris-qt/rcc/note_names.rcc
 /usr/share/gcompris-qt/rcc/number_sequence.rcc
 /usr/share/gcompris-qt/rcc/numbers-odd-even.rcc
 /usr/share/gcompris-qt/rcc/paintings.rcc
 /usr/share/gcompris-qt/rcc/penalty.rcc
 /usr/share/gcompris-qt/rcc/photo_hunter.rcc
+/usr/share/gcompris-qt/rcc/piano_composition.rcc
 /usr/share/gcompris-qt/rcc/planegame.rcc
+/usr/share/gcompris-qt/rcc/play_piano.rcc
+/usr/share/gcompris-qt/rcc/play_rhythm.rcc
+/usr/share/gcompris-qt/rcc/railroad.rcc
 /usr/share/gcompris-qt/rcc/readingh.rcc
 /usr/share/gcompris-qt/rcc/readingv.rcc
 /usr/share/gcompris-qt/rcc/redraw.rcc
@@ -246,6 +253,7 @@ popd
 /usr/share/gcompris-qt/rcc/simplepaint.rcc
 /usr/share/gcompris-qt/rcc/smallnumbers.rcc
 /usr/share/gcompris-qt/rcc/smallnumbers2.rcc
+/usr/share/gcompris-qt/rcc/solar_system.rcc
 /usr/share/gcompris-qt/rcc/submarine.rcc
 /usr/share/gcompris-qt/rcc/sudoku.rcc
 /usr/share/gcompris-qt/rcc/superbrain.rcc
@@ -268,9 +276,11 @@ popd
 /usr/share/gcompris-qt/translations/gcompris_da.qm
 /usr/share/gcompris-qt/translations/gcompris_de.qm
 /usr/share/gcompris-qt/translations/gcompris_el.qm
+/usr/share/gcompris-qt/translations/gcompris_en.qm
 /usr/share/gcompris-qt/translations/gcompris_en_GB.qm
 /usr/share/gcompris-qt/translations/gcompris_es.qm
 /usr/share/gcompris-qt/translations/gcompris_et.qm
+/usr/share/gcompris-qt/translations/gcompris_eu.qm
 /usr/share/gcompris-qt/translations/gcompris_fi.qm
 /usr/share/gcompris-qt/translations/gcompris_fr.qm
 /usr/share/gcompris-qt/translations/gcompris_ga.qm
@@ -283,6 +293,7 @@ popd
 /usr/share/gcompris-qt/translations/gcompris_ja.qm
 /usr/share/gcompris-qt/translations/gcompris_ko.qm
 /usr/share/gcompris-qt/translations/gcompris_lv.qm
+/usr/share/gcompris-qt/translations/gcompris_ml.qm
 /usr/share/gcompris-qt/translations/gcompris_nb.qm
 /usr/share/gcompris-qt/translations/gcompris_nl.qm
 /usr/share/gcompris-qt/translations/gcompris_nn.qm
@@ -312,7 +323,7 @@ popd
 /usr/share/doc/HTML/en/gcompris-qt/traffic-select-mode.png
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/gcompris-qt/COPYING
-/usr/share/doc/gcompris-qt/src_activities_checkers_LICENSE
-/usr/share/doc/gcompris-qt/src_core_COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gcompris-qt/COPYING
+/usr/share/package-licenses/gcompris-qt/src_activities_checkers_LICENSE
+/usr/share/package-licenses/gcompris-qt/src_core_COPYING
