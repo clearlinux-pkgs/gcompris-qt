@@ -6,7 +6,7 @@
 #
 Name     : gcompris-qt
 Version  : 0.95
-Release  : 4
+Release  : 5
 URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz
 Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz
 Source99 : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz.sig
