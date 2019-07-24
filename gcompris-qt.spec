@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x63D7264C05687D7E (animtim@gmail.com)
 #
 Name     : gcompris-qt
-Version  : 0.95
-Release  : 5
-URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz
-Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz
-Source99 : https://gcompris.net/download/qt/src/gcompris-qt-0.95.tar.xz.sig
+Version  : 0.96
+Release  : 6
+URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.96.tar.xz
+Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.96.tar.xz
+Source99 : https://gcompris.net/download/qt/src/gcompris-qt-0.96.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0 LAL-1.2 MPL-2.0
@@ -20,6 +20,7 @@ BuildRequires : buildreq-cmake
 BuildRequires : buildreq-qmake
 BuildRequires : git
 BuildRequires : mesa-dev
+BuildRequires : openssl-dev
 BuildRequires : p7zip
 BuildRequires : pkgconfig(Qt5Multimedia)
 BuildRequires : pkgconfig(Qt5Qml)
@@ -74,22 +75,30 @@ license components for the gcompris-qt package.
 
 
 %prep
-%setup -q -n gcompris-qt-0.95
+%setup -q -n gcompris-qt-0.96
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1545509066
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1564007707
 mkdir -p clr-build
 pushd clr-build
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake ..
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1545509066
+export SOURCE_DATE_EPOCH=1564007707
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gcompris-qt
 cp COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/COPYING
