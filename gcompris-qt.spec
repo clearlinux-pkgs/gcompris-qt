@@ -5,12 +5,12 @@
 # Source0 file verified with key 0x63D7264C05687D7E (animtim@gmail.com)
 #
 Name     : gcompris-qt
-Version  : 0.96
-Release  : 6
-URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.96.tar.xz
-Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.96.tar.xz
-Source99 : https://gcompris.net/download/qt/src/gcompris-qt-0.96.tar.xz.sig
-Summary  : No detailed summary available
+Version  : 0.97
+Release  : 7
+URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.97.tar.xz
+Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.97.tar.xz
+Source1 : https://gcompris.net/download/qt/src/gcompris-qt-0.97.tar.xz.sig
+Summary  : Educational software suite comprising of numerous activities for children aged 2 to 10
 Group    : Development/Tools
 License  : GPL-3.0 LAL-1.2 MPL-2.0
 Requires: gcompris-qt-bin = %{version}-%{release}
@@ -33,12 +33,121 @@ BuildRequires : qtbase-dev mesa-dev
 BuildRequires : qttools-extras
 
 %description
-GCompris / I Got IT
-GCompris is a GNU package
-https://gcompris.net
-GCompris is a high quality educational software suite, including a large
-number of activities for children aged 2 to 10. Some of the activities
-are game orientated, but nonetheless still educational.
+License for the activity icons
+License: CC-BY-SA 4.0
+Files:
+advanced_colors.svg
+algebra_by.svg
+algebra_div.svg
+algebra_minus.svg
+algebra_plus.svg
+algorithm.svg
+align4.svg
+align4-2players.svg
+alphabet-sequence.svg
+baby_wordprocessor.svg
+babymatch.svg
+ballcatch.svg
+bargame.svg
+bargame_2players.svg
+braille_alphabets.svg
+braille_fun.svg
+canal_lock.svg
+categorization.svg
+checkers.svg
+checkers_2players.svg
+chess.svg
+chess_2players.svg
+chess_partyend.svg
+chronos.svg
+click_on_letter.svg
+click_on_letter_up.svg
+clickanddraw.svg
+clickgame.svg
+clockgame.svg
+color_mix.svg
+color_mix_light.svg
+colors.svg
+crane.svg
+drawnumbers.svg
+enumerate.svg
+erase.svg
+erase_2clic.svg
+erase_clic.svg
+explore_farm_animals.svg
+fifteen.svg
+followline.svg
+football.svg
+gletters.svg
+gnumch-equality.svg
+gnumch-factors.svg
+gnumch-inequality.svg
+gnumch-multiples.svg
+gnumch-primes.svg
+guessnumber.svg
+hangman.svg
+hexagon.svg
+instruments.svg
+intro_gravity.svg
+land_safe.svg
+lang.svg
+leftright.svg
+lightsoff.svg
+louis-braille.svg
+magic-hat-minus.svg
+magic-hat-plus.svg
+maze.svg
+mazeinvisible.svg
+mazerelative.svg
+memory.svg
+memory-enumerate.svg
+memory-math-add.svg
+memory-math-add-minus.svg
+memory-math-add-minus-mult-div.svg
+memory-math-add-minus-mult-div-tux.svg
+memory-math-add-minus-tux.svg
+memory-math-add-tux.svg
+memory-math-div.svg
+memory-math-div-tux.svg
+memory-math-minus.svg
+memory-math-minus-tux.svg
+memory-math-mult.svg
+memory-math-mult-div.svg
+memory-math-mult-div-tux.svg
+memory-math-mult-tux.svg
+memory-sound.svg
+memory-sound-tux.svg
+memory-tux.svg
+memory-wordnumber.svg
+mining.svg
+money.svg
+money_back.svg
+money_back_cents.svg
+money_cents.svg
+mosaic.svg
+number-odd-even.svg
+penalty.svg
+planegame.svg
+readingh.svg
+readingv.svg
+redraw.svg
+redraw_symmetrical.svg
+renewable_energy.svg
+reverscount.svg
+scalesboard.svg
+scalesboard_weight.svg
+scalesboard_weight_avoirdupois.svg
+share.svg
+simplepaint.svg
+smallnumbers.svg
+smallnumbers2.svg
+sudoku.svg
+target.svg
+tic_tac_toe.svg
+tic_tac_toe_2players.svg
+traffic.svg
+watercycle.svg
+wordsgame.svg
 
 %package bin
 Summary: bin components for the gcompris-qt package.
@@ -75,16 +184,18 @@ license components for the gcompris-qt package.
 
 
 %prep
-%setup -q -n gcompris-qt-0.96
+%setup -q -n gcompris-qt-0.97
+cd %{_builddir}/gcompris-qt-0.97
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1564007707
+export SOURCE_DATE_EPOCH=1575277730
 mkdir -p clr-build
 pushd clr-build
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -94,16 +205,17 @@ export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake ..
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1564007707
+export SOURCE_DATE_EPOCH=1575277730
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gcompris-qt
-cp COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/COPYING
-cp src/activities/checkers/LICENSE %{buildroot}/usr/share/package-licenses/gcompris-qt/src_activities_checkers_LICENSE
-cp src/core/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/src_core_COPYING
+cp %{_builddir}/gcompris-qt-0.97/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/0dd432edfab90223f22e49c02e2124f87d6f0a56
+cp %{_builddir}/gcompris-qt-0.97/src/activities/checkers/LICENSE %{buildroot}/usr/share/package-licenses/gcompris-qt/8ce799566609a30f261b9f449a95f3b1153cb841
+cp %{_builddir}/gcompris-qt-0.97/src/activities/memory-sound/resource/Licence.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
+cp %{_builddir}/gcompris-qt-0.97/src/core/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/221e196bed171f39eb74d141567ef5a64887d41b
 pushd clr-build
 %make_install
 popd
@@ -128,6 +240,7 @@ popd
 /usr/share/gcompris-qt/rcc/align4-2players.rcc
 /usr/share/gcompris-qt/rcc/align4.rcc
 /usr/share/gcompris-qt/rcc/alphabet-sequence.rcc
+/usr/share/gcompris-qt/rcc/baby_tangram.rcc
 /usr/share/gcompris-qt/rcc/baby_wordprocessor.rcc
 /usr/share/gcompris-qt/rcc/babymatch.rcc
 /usr/share/gcompris-qt/rcc/babyshapes.rcc
@@ -247,6 +360,7 @@ popd
 /usr/share/gcompris-qt/rcc/planegame.rcc
 /usr/share/gcompris-qt/rcc/play_piano.rcc
 /usr/share/gcompris-qt/rcc/play_rhythm.rcc
+/usr/share/gcompris-qt/rcc/programmingMaze.rcc
 /usr/share/gcompris-qt/rcc/railroad.rcc
 /usr/share/gcompris-qt/rcc/readingh.rcc
 /usr/share/gcompris-qt/rcc/readingv.rcc
@@ -302,6 +416,7 @@ popd
 /usr/share/gcompris-qt/translations/gcompris_ja.qm
 /usr/share/gcompris-qt/translations/gcompris_ko.qm
 /usr/share/gcompris-qt/translations/gcompris_lv.qm
+/usr/share/gcompris-qt/translations/gcompris_mk.qm
 /usr/share/gcompris-qt/translations/gcompris_ml.qm
 /usr/share/gcompris-qt/translations/gcompris_nb.qm
 /usr/share/gcompris-qt/translations/gcompris_nl.qm
@@ -333,6 +448,7 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/gcompris-qt/COPYING
-/usr/share/package-licenses/gcompris-qt/src_activities_checkers_LICENSE
-/usr/share/package-licenses/gcompris-qt/src_core_COPYING
+/usr/share/package-licenses/gcompris-qt/0dd432edfab90223f22e49c02e2124f87d6f0a56
+/usr/share/package-licenses/gcompris-qt/221e196bed171f39eb74d141567ef5a64887d41b
+/usr/share/package-licenses/gcompris-qt/8ce799566609a30f261b9f449a95f3b1153cb841
+/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
