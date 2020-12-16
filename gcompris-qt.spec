@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x63D7264C05687D7E (animtim@gmail.com)
 #
 Name     : gcompris-qt
-Version  : 0.97.1
-Release  : 8
-URL      : https://gcompris.net/download/qt/src/gcompris-qt-0.97.1.tar.xz
-Source0  : https://gcompris.net/download/qt/src/gcompris-qt-0.97.1.tar.xz
-Source1  : https://gcompris.net/download/qt/src/gcompris-qt-0.97.1.tar.xz.sig
+Version  : 1.0
+Release  : 9
+URL      : https://gcompris.net/download/qt/src/gcompris-qt-1.0.tar.xz
+Source0  : https://gcompris.net/download/qt/src/gcompris-qt-1.0.tar.xz
+Source1  : https://gcompris.net/download/qt/src/gcompris-qt-1.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0 LAL-1.2 MPL-2.0
@@ -39,7 +39,7 @@ GCompris is a GNU package
 https://gcompris.net
 GCompris is a high quality educational software suite, including a large
 number of activities for children aged 2 to 10. Some of the activities
-are game orientated, but nonetheless still educational.
+are game orientated, but still educational.
 
 %package bin
 Summary: bin components for the gcompris-qt package.
@@ -76,15 +76,15 @@ license components for the gcompris-qt package.
 
 
 %prep
-%setup -q -n gcompris-qt-0.97.1
-cd %{_builddir}/gcompris-qt-0.97.1
+%setup -q -n gcompris-qt-1.0
+cd %{_builddir}/gcompris-qt-1.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1593462905
+export SOURCE_DATE_EPOCH=1608134266
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -100,13 +100,13 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1593462905
+export SOURCE_DATE_EPOCH=1608134266
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gcompris-qt
-cp %{_builddir}/gcompris-qt-0.97.1/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/0dd432edfab90223f22e49c02e2124f87d6f0a56
-cp %{_builddir}/gcompris-qt-0.97.1/src/activities/checkers/LICENSE %{buildroot}/usr/share/package-licenses/gcompris-qt/8ce799566609a30f261b9f449a95f3b1153cb841
-cp %{_builddir}/gcompris-qt-0.97.1/src/activities/memory-sound/resource/Licence.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
-cp %{_builddir}/gcompris-qt-0.97.1/src/core/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/221e196bed171f39eb74d141567ef5a64887d41b
+cp %{_builddir}/gcompris-qt-1.0/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/0dd432edfab90223f22e49c02e2124f87d6f0a56
+cp %{_builddir}/gcompris-qt-1.0/src/activities/checkers/LICENSE %{buildroot}/usr/share/package-licenses/gcompris-qt/8ce799566609a30f261b9f449a95f3b1153cb841
+cp %{_builddir}/gcompris-qt-1.0/src/activities/memory-sound/resource/Licence.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
+cp %{_builddir}/gcompris-qt-1.0/src/core/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/221e196bed171f39eb74d141567ef5a64887d41b
 pushd clr-build
 %make_install
 popd
@@ -131,6 +131,8 @@ popd
 /usr/share/gcompris-qt/rcc/align4-2players.rcc
 /usr/share/gcompris-qt/rcc/align4.rcc
 /usr/share/gcompris-qt/rcc/alphabet-sequence.rcc
+/usr/share/gcompris-qt/rcc/analog_electricity.rcc
+/usr/share/gcompris-qt/rcc/baby_keyboard.rcc
 /usr/share/gcompris-qt/rcc/baby_tangram.rcc
 /usr/share/gcompris-qt/rcc/baby_wordprocessor.rcc
 /usr/share/gcompris-qt/rcc/babymatch.rcc
@@ -188,6 +190,7 @@ popd
 /usr/share/gcompris-qt/rcc/gnumch-multiples.rcc
 /usr/share/gcompris-qt/rcc/gnumch-primes.rcc
 /usr/share/gcompris-qt/rcc/graph-coloring.rcc
+/usr/share/gcompris-qt/rcc/gravity.rcc
 /usr/share/gcompris-qt/rcc/guesscount.rcc
 /usr/share/gcompris-qt/rcc/guessnumber.rcc
 /usr/share/gcompris-qt/rcc/hangman.rcc
@@ -196,9 +199,11 @@ popd
 /usr/share/gcompris-qt/rcc/hexagon.rcc
 /usr/share/gcompris-qt/rcc/imagename.rcc
 /usr/share/gcompris-qt/rcc/instruments.rcc
-/usr/share/gcompris-qt/rcc/intro_gravity.rcc
 /usr/share/gcompris-qt/rcc/land_safe.rcc
 /usr/share/gcompris-qt/rcc/lang.rcc
+/usr/share/gcompris-qt/rcc/learn_additions.rcc
+/usr/share/gcompris-qt/rcc/learn_digits.rcc
+/usr/share/gcompris-qt/rcc/learn_subtractions.rcc
 /usr/share/gcompris-qt/rcc/leftright.rcc
 /usr/share/gcompris-qt/rcc/letter-in-word.rcc
 /usr/share/gcompris-qt/rcc/lightsoff.rcc
@@ -303,6 +308,7 @@ popd
 /usr/share/gcompris-qt/translations/gcompris_he.qm
 /usr/share/gcompris-qt/translations/gcompris_hi.qm
 /usr/share/gcompris-qt/translations/gcompris_hu.qm
+/usr/share/gcompris-qt/translations/gcompris_ia.qm
 /usr/share/gcompris-qt/translations/gcompris_id.qm
 /usr/share/gcompris-qt/translations/gcompris_it.qm
 /usr/share/gcompris-qt/translations/gcompris_ja.qm
@@ -334,10 +340,11 @@ popd
 
 %files doc
 %defattr(0644,root,root,0755)
+/usr/share/doc/HTML/en/gcompris-qt/activity-config.png
+/usr/share/doc/HTML/en/gcompris-qt/dataset.png
 /usr/share/doc/HTML/en/gcompris-qt/gcompris-main-menu.png
 /usr/share/doc/HTML/en/gcompris-qt/index.cache.bz2
 /usr/share/doc/HTML/en/gcompris-qt/index.docbook
-/usr/share/doc/HTML/en/gcompris-qt/traffic-select-mode.png
 
 %files license
 %defattr(0644,root,root,0755)
