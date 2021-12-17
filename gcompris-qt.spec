@@ -5,14 +5,14 @@
 # Source0 file verified with key 0x63D7264C05687D7E (animtim@gmail.com)
 #
 Name     : gcompris-qt
-Version  : 1.1
-Release  : 10
-URL      : https://gcompris.net/download/qt/src/gcompris-qt-1.1.tar.xz
-Source0  : https://gcompris.net/download/qt/src/gcompris-qt-1.1.tar.xz
-Source1  : https://gcompris.net/download/qt/src/gcompris-qt-1.1.tar.xz.sig
+Version  : 2.0
+Release  : 11
+URL      : https://gcompris.net/download/qt/src/gcompris-qt-2.0.tar.xz
+Source0  : https://gcompris.net/download/qt/src/gcompris-qt-2.0.tar.xz
+Source1  : https://gcompris.net/download/qt/src/gcompris-qt-2.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : AGPL-3.0 GPL-3.0 LAL-1.2 MPL-2.0
+License  : AGPL-3.0 BSD-2-Clause BSD-3-Clause GPL-2.0 GPL-3.0 LAL-1.2 LGPL-3.0
 Requires: gcompris-qt-bin = %{version}-%{release}
 Requires: gcompris-qt-data = %{version}-%{release}
 Requires: gcompris-qt-license = %{version}-%{release}
@@ -76,38 +76,41 @@ license components for the gcompris-qt package.
 
 
 %prep
-%setup -q -n gcompris-qt-1.1
-cd %{_builddir}/gcompris-qt-1.1
+%setup -q -n gcompris-qt-2.0
+cd %{_builddir}/gcompris-qt-2.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1616423929
+export SOURCE_DATE_EPOCH=1639758062
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1616423929
+export SOURCE_DATE_EPOCH=1639758062
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gcompris-qt
-cp %{_builddir}/gcompris-qt-1.1/COPYING-GPLv3 %{buildroot}/usr/share/package-licenses/gcompris-qt/0dd432edfab90223f22e49c02e2124f87d6f0a56
-cp %{_builddir}/gcompris-qt-1.1/COPYING.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/4c665f87b5dc2e7d26279c4b48968d085e1ace32
-cp %{_builddir}/gcompris-qt-1.1/src/activities/analog_electricity/AGPL-LICENSE %{buildroot}/usr/share/package-licenses/gcompris-qt/396244d63d3aefdda48dfb84814dafcc805c8ce0
-cp %{_builddir}/gcompris-qt-1.1/src/activities/checkers/LICENSE %{buildroot}/usr/share/package-licenses/gcompris-qt/8ce799566609a30f261b9f449a95f3b1153cb841
-cp %{_builddir}/gcompris-qt-1.1/src/activities/memory-sound/resource/Licence.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
+cp %{_builddir}/gcompris-qt-2.0/LICENSES/BSD-2-Clause.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/52039e5c19c950d4c7d6ec5da42ebba2c6def7ee
+cp %{_builddir}/gcompris-qt-2.0/LICENSES/BSD-3-Clause.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/9950d3fdce1cff1f71212fb5abd31453c6ee2f8c
+cp %{_builddir}/gcompris-qt-2.0/LICENSES/GPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/3e8971c6c5f16674958913a94a36b1ea7a00ac46
+cp %{_builddir}/gcompris-qt-2.0/LICENSES/GPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/2123756e0b1fc8243547235a33c0fcabfe3b9a51
+cp %{_builddir}/gcompris-qt-2.0/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/2123756e0b1fc8243547235a33c0fcabfe3b9a51
+cp %{_builddir}/gcompris-qt-2.0/LICENSES/LGPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/19d98e1b6f8ef12849ea4012a052d3907f336c91
+cp %{_builddir}/gcompris-qt-2.0/src/activities/memory-sound/resource/Licence.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
+cp %{_builddir}/gcompris-qt-2.0/src/core/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/b6cd73351c6cb5bd32a11ae684577b9d28b29459
 pushd clr-build
 %make_install
 popd
@@ -134,6 +137,7 @@ popd
 /usr/share/gcompris-qt/rcc/alphabet-sequence.rcc
 /usr/share/gcompris-qt/rcc/analog_electricity.rcc
 /usr/share/gcompris-qt/rcc/baby_keyboard.rcc
+/usr/share/gcompris-qt/rcc/baby_mouse.rcc
 /usr/share/gcompris-qt/rcc/baby_tangram.rcc
 /usr/share/gcompris-qt/rcc/baby_wordprocessor.rcc
 /usr/share/gcompris-qt/rcc/babymatch.rcc
@@ -203,7 +207,11 @@ popd
 /usr/share/gcompris-qt/rcc/land_safe.rcc
 /usr/share/gcompris-qt/rcc/lang.rcc
 /usr/share/gcompris-qt/rcc/learn_additions.rcc
+/usr/share/gcompris-qt/rcc/learn_decimals.rcc
+/usr/share/gcompris-qt/rcc/learn_decimals_additions.rcc
+/usr/share/gcompris-qt/rcc/learn_decimals_subtractions.rcc
 /usr/share/gcompris-qt/rcc/learn_digits.rcc
+/usr/share/gcompris-qt/rcc/learn_quantities.rcc
 /usr/share/gcompris-qt/rcc/learn_subtractions.rcc
 /usr/share/gcompris-qt/rcc/leftright.rcc
 /usr/share/gcompris-qt/rcc/letter-in-word.rcc
@@ -250,13 +258,24 @@ popd
 /usr/share/gcompris-qt/rcc/note_names.rcc
 /usr/share/gcompris-qt/rcc/number_sequence.rcc
 /usr/share/gcompris-qt/rcc/numbers-odd-even.rcc
+/usr/share/gcompris-qt/rcc/ordering_alphabets.rcc
+/usr/share/gcompris-qt/rcc/ordering_chronology.rcc
+/usr/share/gcompris-qt/rcc/ordering_numbers.rcc
+/usr/share/gcompris-qt/rcc/ordering_sentences.rcc
+/usr/share/gcompris-qt/rcc/oware.rcc
+/usr/share/gcompris-qt/rcc/oware_2players.rcc
 /usr/share/gcompris-qt/rcc/paintings.rcc
+/usr/share/gcompris-qt/rcc/path_decoding.rcc
+/usr/share/gcompris-qt/rcc/path_decoding_relative.rcc
+/usr/share/gcompris-qt/rcc/path_encoding.rcc
+/usr/share/gcompris-qt/rcc/path_encoding_relative.rcc
 /usr/share/gcompris-qt/rcc/penalty.rcc
 /usr/share/gcompris-qt/rcc/photo_hunter.rcc
 /usr/share/gcompris-qt/rcc/piano_composition.rcc
 /usr/share/gcompris-qt/rcc/planegame.rcc
 /usr/share/gcompris-qt/rcc/play_piano.rcc
 /usr/share/gcompris-qt/rcc/play_rhythm.rcc
+/usr/share/gcompris-qt/rcc/positions.rcc
 /usr/share/gcompris-qt/rcc/programmingMaze.rcc
 /usr/share/gcompris-qt/rcc/railroad.rcc
 /usr/share/gcompris-qt/rcc/readingh.rcc
@@ -284,6 +303,7 @@ popd
 /usr/share/gcompris-qt/rcc/traffic.rcc
 /usr/share/gcompris-qt/rcc/watercycle.rcc
 /usr/share/gcompris-qt/rcc/wordsgame.rcc
+/usr/share/gcompris-qt/translations/gcompris_az.qm
 /usr/share/gcompris-qt/translations/gcompris_be.qm
 /usr/share/gcompris-qt/translations/gcompris_br.qm
 /usr/share/gcompris-qt/translations/gcompris_ca.qm
@@ -293,9 +313,10 @@ popd
 /usr/share/gcompris-qt/translations/gcompris_en.qm
 /usr/share/gcompris-qt/translations/gcompris_en_GB.qm
 /usr/share/gcompris-qt/translations/gcompris_es.qm
+/usr/share/gcompris-qt/translations/gcompris_et.qm
 /usr/share/gcompris-qt/translations/gcompris_eu.qm
+/usr/share/gcompris-qt/translations/gcompris_fi.qm
 /usr/share/gcompris-qt/translations/gcompris_fr.qm
-/usr/share/gcompris-qt/translations/gcompris_ga.qm
 /usr/share/gcompris-qt/translations/gcompris_he.qm
 /usr/share/gcompris-qt/translations/gcompris_hu.qm
 /usr/share/gcompris-qt/translations/gcompris_id.qm
@@ -330,8 +351,10 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/gcompris-qt/0dd432edfab90223f22e49c02e2124f87d6f0a56
-/usr/share/package-licenses/gcompris-qt/396244d63d3aefdda48dfb84814dafcc805c8ce0
-/usr/share/package-licenses/gcompris-qt/4c665f87b5dc2e7d26279c4b48968d085e1ace32
-/usr/share/package-licenses/gcompris-qt/8ce799566609a30f261b9f449a95f3b1153cb841
+/usr/share/package-licenses/gcompris-qt/19d98e1b6f8ef12849ea4012a052d3907f336c91
+/usr/share/package-licenses/gcompris-qt/2123756e0b1fc8243547235a33c0fcabfe3b9a51
+/usr/share/package-licenses/gcompris-qt/3e8971c6c5f16674958913a94a36b1ea7a00ac46
+/usr/share/package-licenses/gcompris-qt/52039e5c19c950d4c7d6ec5da42ebba2c6def7ee
+/usr/share/package-licenses/gcompris-qt/9950d3fdce1cff1f71212fb5abd31453c6ee2f8c
+/usr/share/package-licenses/gcompris-qt/b6cd73351c6cb5bd32a11ae684577b9d28b29459
 /usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
