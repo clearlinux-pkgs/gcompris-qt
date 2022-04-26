@@ -6,13 +6,13 @@
 #
 Name     : gcompris-qt
 Version  : 2.4
-Release  : 15
+Release  : 16
 URL      : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-2.4.tar.xz
 Source0  : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-2.4.tar.xz
 Source1  : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-2.4.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : AGPL-3.0 BSD-2-Clause BSD-3-Clause GPL-2.0 GPL-3.0 LAL-1.2 LGPL-3.0 MPL-2.0
+License  : AGPL-3.0 BSD-2-Clause BSD-3-Clause GPL-2.0 GPL-3.0 LAL-1.2 LGPL-3.0 MPL-2.0 Unlicense
 Requires: gcompris-qt-bin = %{version}-%{release}
 Requires: gcompris-qt-data = %{version}-%{release}
 Requires: gcompris-qt-license = %{version}-%{release}
@@ -32,7 +32,7 @@ BuildRequires : pkgconfig(Qt5UiTools)
 BuildRequires : pkgconfig(Qt5XmlPatterns)
 BuildRequires : qml-box2d
 BuildRequires : qtbase-dev mesa-dev
-BuildRequires : qttools-extras
+BuildRequires : qttools-dev
 
 %description
 GCompris / I Got IT
@@ -85,7 +85,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1649860409
+export SOURCE_DATE_EPOCH=1650940630
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -101,7 +101,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1649860409
+export SOURCE_DATE_EPOCH=1650940630
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gcompris-qt
 cp %{_builddir}/gcompris-qt-2.4/LICENSES/AGPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/ab44f99cc2a8ef07a252af053e1daafc337cd2d5
@@ -112,6 +112,8 @@ cp %{_builddir}/gcompris-qt-2.4/LICENSES/GPL-3.0-only.txt %{buildroot}/usr/share
 cp %{_builddir}/gcompris-qt-2.4/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/2123756e0b1fc8243547235a33c0fcabfe3b9a51
 cp %{_builddir}/gcompris-qt-2.4/LICENSES/LGPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/19d98e1b6f8ef12849ea4012a052d3907f336c91
 cp %{_builddir}/gcompris-qt-2.4/LICENSES/MPL-2.0.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/d574726e597032f1592b3596e80feb055e2ccf93
+cp %{_builddir}/gcompris-qt-2.4/LICENSES/Unlicense.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/bb7181fc26314a4752223527640b17e37fa7b4c7
+cp %{_builddir}/gcompris-qt-2.4/LICENSES/Unlicense.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/bb7181fc26314a4752223527640b17e37fa7b4c7
 cp %{_builddir}/gcompris-qt-2.4/src/activities/memory-sound/resource/Licence.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
 cp %{_builddir}/gcompris-qt-2.4/src/core/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/b6cd73351c6cb5bd32a11ae684577b9d28b29459
 pushd clr-build
@@ -362,5 +364,6 @@ popd
 /usr/share/package-licenses/gcompris-qt/9950d3fdce1cff1f71212fb5abd31453c6ee2f8c
 /usr/share/package-licenses/gcompris-qt/ab44f99cc2a8ef07a252af053e1daafc337cd2d5
 /usr/share/package-licenses/gcompris-qt/b6cd73351c6cb5bd32a11ae684577b9d28b29459
+/usr/share/package-licenses/gcompris-qt/bb7181fc26314a4752223527640b17e37fa7b4c7
 /usr/share/package-licenses/gcompris-qt/d574726e597032f1592b3596e80feb055e2ccf93
 /usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
