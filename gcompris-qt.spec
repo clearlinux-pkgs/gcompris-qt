@@ -6,7 +6,7 @@
 #
 Name     : gcompris-qt
 Version  : 2.4
-Release  : 16
+Release  : 17
 URL      : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-2.4.tar.xz
 Source0  : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-2.4.tar.xz
 Source1  : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-2.4.tar.xz.sig
