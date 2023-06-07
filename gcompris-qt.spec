@@ -6,14 +6,14 @@
 # Source0 file verified with key 0x63D7264C05687D7E (animtim@gmail.com)
 #
 Name     : gcompris-qt
-Version  : 3.2
-Release  : 20
-URL      : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-3.2.tar.xz
-Source0  : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-3.2.tar.xz
-Source1  : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-3.2.tar.xz.sig
+Version  : 3.3
+Release  : 21
+URL      : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-3.3.tar.xz
+Source0  : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-3.3.tar.xz
+Source1  : https://download.kde.org/stable/gcompris/qt/src/gcompris-qt-3.3.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : AGPL-3.0 BSD-2-Clause BSD-3-Clause GPL-2.0 GPL-3.0 LAL-1.2 LGPL-3.0 MPL-2.0 Unlicense
+License  : AGPL-3.0 Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 CC0-1.0 GFDL-1.2 GPL-2.0 GPL-3.0 LAL-1.2 LGPL-3.0 MPL-2.0 Unlicense
 Requires: gcompris-qt-bin = %{version}-%{release}
 Requires: gcompris-qt-data = %{version}-%{release}
 Requires: gcompris-qt-license = %{version}-%{release}
@@ -72,54 +72,82 @@ license components for the gcompris-qt package.
 
 
 %prep
-%setup -q -n gcompris-qt-3.2
-cd %{_builddir}/gcompris-qt-3.2
+%setup -q -n gcompris-qt-3.3
+cd %{_builddir}/gcompris-qt-3.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680546981
+export SOURCE_DATE_EPOCH=1686147478
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+%cmake ..
+make  %{?_smp_mflags}
+popd
+mkdir -p clr-build-avx2
+pushd clr-build-avx2
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CFLAGS="$CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1680546981
+export SOURCE_DATE_EPOCH=1686147478
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gcompris-qt
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/AGPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/ab44f99cc2a8ef07a252af053e1daafc337cd2d5 || :
+cp %{_builddir}/gcompris-qt-%{version}/LICENSES/Apache-2.0.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/81bf6d7df5e1fce2d1a8b3b97bb90cc33ad11593 || :
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/BSD-2-Clause.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/52039e5c19c950d4c7d6ec5da42ebba2c6def7ee || :
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/BSD-3-Clause.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/9950d3fdce1cff1f71212fb5abd31453c6ee2f8c || :
-cp %{_builddir}/gcompris-qt-%{version}/LICENSES/GPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/3e8971c6c5f16674958913a94a36b1ea7a00ac46 || :
+cp %{_builddir}/gcompris-qt-%{version}/LICENSES/CC-BY-SA-4.0.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/218ff5d31a950e718669755000fd08bf864a50ab || :
+cp %{_builddir}/gcompris-qt-%{version}/LICENSES/CC0-1.0.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/82da472f6d00dc5f0a651f33ebb320aa9c7b08d0 || :
+cp %{_builddir}/gcompris-qt-%{version}/LICENSES/GFDL-1.2-or-later.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/7697008f58568e61e7598e796eafc2a997503fde || :
+cp %{_builddir}/gcompris-qt-%{version}/LICENSES/GPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/3cb34cfc72e87654683f2894299adf912d14b284 || :
+cp %{_builddir}/gcompris-qt-%{version}/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/e712eadfab0d2357c0f50f599ef35ee0d87534cb || :
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/GPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/2123756e0b1fc8243547235a33c0fcabfe3b9a51 || :
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/2123756e0b1fc8243547235a33c0fcabfe3b9a51 || :
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/LGPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/19d98e1b6f8ef12849ea4012a052d3907f336c91 || :
+cp %{_builddir}/gcompris-qt-%{version}/LICENSES/LicenseRef-Free-Art-Licence-1.2.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce || :
+cp %{_builddir}/gcompris-qt-%{version}/LICENSES/LicenseRef-Free-Art-Licence-1.2.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce || :
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/MPL-2.0.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/d574726e597032f1592b3596e80feb055e2ccf93 || :
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/Unlicense.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/bb7181fc26314a4752223527640b17e37fa7b4c7 || :
 cp %{_builddir}/gcompris-qt-%{version}/LICENSES/Unlicense.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/bb7181fc26314a4752223527640b17e37fa7b4c7 || :
-cp %{_builddir}/gcompris-qt-%{version}/src/activities/memory-sound/resource/Licence.txt %{buildroot}/usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce || :
 cp %{_builddir}/gcompris-qt-%{version}/src/core/COPYING %{buildroot}/usr/share/package-licenses/gcompris-qt/d545523e4792c3756b1e46342a2a13b5554d1594 || :
+pushd clr-build-avx2
+%make_install_v3  || :
+popd
 pushd clr-build
 %make_install
 popd
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/gcompris-qt
 /usr/bin/gcompris-qt
 
 %files data
@@ -311,6 +339,7 @@ popd
 /usr/share/gcompris-qt/rcc/traffic.rcc
 /usr/share/gcompris-qt/rcc/watercycle.rcc
 /usr/share/gcompris-qt/rcc/wordsgame.rcc
+/usr/share/gcompris-qt/translations/gcompris_ar.qm
 /usr/share/gcompris-qt/translations/gcompris_az.qm
 /usr/share/gcompris-qt/translations/gcompris_be.qm
 /usr/share/gcompris-qt/translations/gcompris_br.qm
@@ -321,6 +350,7 @@ popd
 /usr/share/gcompris-qt/translations/gcompris_el.qm
 /usr/share/gcompris-qt/translations/gcompris_en.qm
 /usr/share/gcompris-qt/translations/gcompris_en_GB.qm
+/usr/share/gcompris-qt/translations/gcompris_eo.qm
 /usr/share/gcompris-qt/translations/gcompris_es.qm
 /usr/share/gcompris-qt/translations/gcompris_et.qm
 /usr/share/gcompris-qt/translations/gcompris_eu.qm
@@ -356,11 +386,16 @@ popd
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/gcompris-qt/19d98e1b6f8ef12849ea4012a052d3907f336c91
 /usr/share/package-licenses/gcompris-qt/2123756e0b1fc8243547235a33c0fcabfe3b9a51
-/usr/share/package-licenses/gcompris-qt/3e8971c6c5f16674958913a94a36b1ea7a00ac46
+/usr/share/package-licenses/gcompris-qt/218ff5d31a950e718669755000fd08bf864a50ab
+/usr/share/package-licenses/gcompris-qt/3cb34cfc72e87654683f2894299adf912d14b284
 /usr/share/package-licenses/gcompris-qt/52039e5c19c950d4c7d6ec5da42ebba2c6def7ee
+/usr/share/package-licenses/gcompris-qt/7697008f58568e61e7598e796eafc2a997503fde
+/usr/share/package-licenses/gcompris-qt/81bf6d7df5e1fce2d1a8b3b97bb90cc33ad11593
+/usr/share/package-licenses/gcompris-qt/82da472f6d00dc5f0a651f33ebb320aa9c7b08d0
 /usr/share/package-licenses/gcompris-qt/9950d3fdce1cff1f71212fb5abd31453c6ee2f8c
 /usr/share/package-licenses/gcompris-qt/ab44f99cc2a8ef07a252af053e1daafc337cd2d5
 /usr/share/package-licenses/gcompris-qt/bb7181fc26314a4752223527640b17e37fa7b4c7
 /usr/share/package-licenses/gcompris-qt/d545523e4792c3756b1e46342a2a13b5554d1594
 /usr/share/package-licenses/gcompris-qt/d574726e597032f1592b3596e80feb055e2ccf93
+/usr/share/package-licenses/gcompris-qt/e712eadfab0d2357c0f50f599ef35ee0d87534cb
 /usr/share/package-licenses/gcompris-qt/fd750610fa9e8e6e13b7305ad4afe5636f34a0ce
